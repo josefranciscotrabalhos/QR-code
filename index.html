@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gere QR Codes de qualquer link de forma rápida e gratuita.">
+  <meta name="theme-color" content="#0d0d0d">
+  <title>Gerador de QR Code</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23e10600'/><path d='M7 7h7v7H7zM18 7h7v7h-7zM7 18h7v7H7zM18 18h3v3h-3zM22 22h3v3h-3z' fill='%23fff'/></svg>">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/creato-display">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="container topo__conteudo">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="28" height="28"><rect width="32" height="32" rx="6" fill="currentColor"/><path d="M7 7h7v7H7zM18 7h7v7h-7zM7 18h7v7H7zM18 18h3v3h-3zM22 22h3v3h-3z" fill="#fff"/></svg>
+      </span>
+      <span class="topo__nome">Gerador de QR Code</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h1>Transforme qualquer link em <span class="destaque">QR Code</span></h1>
+      <p>Cole o link abaixo, clique em gerar e baixe em <strong>.PNG</strong>, <strong>.JPEG</strong> ou <strong>.PDF</strong>.</p>
+    </section>
+
+    <section class="cartao">
+      <form id="form-qr" class="form" novalidate>
+        <label for="campo-link" class="form__rotulo">Seu link</label>
+        <div class="form__linha">
+          <input
+            type="text"
+            id="campo-link"
+            class="form__campo"
+            placeholder="https://exemplo.com"
+            autocomplete="url"
+            inputmode="url"
+            spellcheck="false"
+            aria-describedby="erro-link"
+          >
+          <button type="button" id="btn-colar" class="btn btn--secundario" title="Colar da área de transferência">Colar</button>
+        </div>
+        <p id="erro-link" class="form__erro" role="alert"></p>
+        <button type="submit" class="btn btn--principal btn--largo">Gerar QR Code</button>
+      </form>
+
+      <div id="resultado" class="resultado" hidden>
+        <div class="resultado__qr">
+          <canvas id="canvas-qr" aria-label="QR Code gerado" role="img"></canvas>
+        </div>
+        <p class="resultado__link" id="resultado-link"></p>
+        <div class="resultado__acoes">
+          <button type="button" id="btn-copiar" class="btn btn--principal">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>
+            Copiar código QR Code
+          </button>
+          <button type="button" id="btn-baixar" class="btn btn--contorno">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+            Baixar como
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="passos">
+      <div class="passo"><span class="passo__num">1</span><p>Cole o link</p></div>
+      <div class="passo"><span class="passo__num">2</span><p>Gere o QR Code</p></div>
+      <div class="passo"><span class="passo__num">3</span><p>Copie ou baixe</p></div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">© <span id="ano"></span> Gerador de QR Code · Tudo é feito no seu navegador.</div>
+  </footer>
+
+  <!-- Modal: Baixar como -->
+  <div id="modal-baixar" class="modal" hidden>
+    <div class="modal__fundo" data-fechar></div>
+    <div class="modal__caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <button type="button" class="modal__fechar" data-fechar aria-label="Fechar">&times;</button>
+      <h2 id="modal-titulo">Baixar como</h2>
+      <p class="modal__texto">Escolha o formato do arquivo:</p>
+      <div class="modal__opcoes">
+        <button type="button" class="opcao" data-formato="png"><span class="opcao__nome">Em <strong>.PNG</strong></span><span class="opcao__desc">Fundo branco, alta qualidade</span></button>
+        <button type="button" class="opcao" data-formato="jpeg"><span class="opcao__nome">Em <strong>.JPEG</strong></span><span class="opcao__desc">Arquivo mais leve</span></button>
+        <button type="button" class="opcao" data-formato="pdf"><span class="opcao__nome">Em <strong>.PDF</strong></span><span class="opcao__desc">Pronto para imprimir</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Avisos (toast) -->
+  <div id="avisos" class="avisos" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="libs/qrcode.js"></script>
+  <script src="libs/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
